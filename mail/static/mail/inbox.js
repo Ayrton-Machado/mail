@@ -39,6 +39,7 @@ function compose_email() {
   
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#emails-body').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
   
   // Clear out composition fields
@@ -51,23 +52,26 @@ function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#emails-body').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
   
+  // Show the mailbox name
+  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
   
   //API get emails
-  fetch('/emails/inbox')
+  fetch(`emails/${mailbox}`)
   .then(response => response.json())
   .then(emails => {
-    console.log(emails);
     
-    // Show the mailbox name
-    document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
-
     // Show the mailbox e-mails
-    document.querySelector('#emails-body').innerHTML = `<p>${emails}</p>`
-
-    return false;
-
+    emails.forEach(function(each_email) {
+      fetch(`emails/${each_email.id}`)
+      .then(response => response.json())
+      .then(email => {
+        console.log(email);
+        //Need to add a div to each email, to show correctly in mailbox
+        document.querySelector('#emails-body').append("()")
+      });
+    });
   });
-  
 }
