@@ -2,9 +2,7 @@ textarea {
     min-height: 400px;
 }
 
-#emails-body {
-    padding: 3px;
-    height: 35px;
+.email_container {
+    padding: 7px;
     border: solid 2px;
-    flex: row;
 }

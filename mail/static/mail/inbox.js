@@ -62,17 +62,19 @@ function load_mailbox(mailbox) {
   .then(emails => {
     
     // Show the mailbox e-mails
-    emails.forEach(function(each_email, index) {
+    emails.forEach((each_email, index) => {
       setTimeout(() => {
         fetch(`/emails/${each_email.id}`)
         .then(response => response.json())
         .then(email => {
           console.log(email)
-          //Need to format each_email
+          //Need to finish format each_email
           const element = document.createElement('div');
+          element.style.cursor = 'pointer';
+          element.className = 'email_container';
           element.innerHTML = `<strong>${email.sender}</strong> ${email.subject} ${email.timestamp}`;
-          element.addEventListener('click', function() {
-            load_email_page(email); 
+          element.addEventListener('click', () => {
+            load_email_page(email);
           });
           document.querySelector('#emails-view').append(element);
         });
@@ -82,6 +84,27 @@ function load_mailbox(mailbox) {
 }
 
 function load_email_page(email) {
-  //Make a Function to show email page when clicked
-  //pass
-};
+  //hide another views
+  document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#compose-view').style.display = 'none';
+
+  //email page
+  const email_page_content = `
+  <p><strong>From:</strong> ${email.recipients}</p>
+  <p><strong>To:</strong> ${email.sender}</p> 
+  <p><strong>Subject:</strong> ${email.subject}</p> 
+  </p><strong>Timestamp:</strong> ${email.timestamp}</p>
+  `;
+
+  //insert in html
+  document.querySelector('#emails-view').innerHTML = email_page_content
+  const reply_button = document.createElement('button');
+  reply_button.innerHTML = 'Reply';
+  reply_button.className = 'btn btn-sm btn-outline-primary';
+
+  document.querySelector('#emails-view').append(reply_button);
+
+  //show the email in the console when it is clicked
+  console.log(email);
+
+}
