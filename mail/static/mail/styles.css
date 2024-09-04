@@ -6,3 +6,13 @@ textarea {
     padding: 7px;
     border: solid 2px;
 }
+
+.email_read {
+    background-color: rgb(189, 189, 189);
+}
+
+.email_body {
+    font-size: 18px;
+    margin-top: 10px;
+    font-family:'Times New Roman', Times, serif;
+}
