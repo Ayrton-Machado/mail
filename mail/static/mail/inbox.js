@@ -45,7 +45,21 @@ function compose_email() {
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
+  document.getElementById('compose-recipients').focus();
 }
+
+function reply_email(email) {
+
+  // Show compose view and hide other views
+  document.querySelector('#emails-view').style.display = 'none'
+  document.querySelector('#compose-view').style.display = 'block'
+
+  //fill with the reply recipients
+  document.querySelector('#compose-recipients').value = `${email.sender}`;
+  document.querySelector('#compose-subject').value = `Re: ${email.subject}`;
+  document.querySelector('#compose-body').value = `On ${email.timestamp} ${email.recipients} wrote: `;
+  document.getElementById('compose-body').focus();
+};
 
 function load_mailbox(mailbox) {
   
@@ -71,13 +85,13 @@ function load_mailbox(mailbox) {
           //Need to finish format each_email
           const element = document.createElement('div');
           element.style.cursor = 'pointer';
+          element.innerHTML = `<span><strong>${email.sender} </strong>  ${email.subject} </span> <span style="color: grey;">${email.timestamp}</span>`;
           if (email.read === true) {
             element.className = 'email_read email_container';
           }
           else {
             element.className = 'email_container';
           };
-          element.innerHTML = `<strong> ${email.sender} </strong> ${email.subject} ${email.timestamp}`;
           element.addEventListener('click', () => {
             read_email(email);
             load_email_page(email);
@@ -96,8 +110,8 @@ function load_email_page(email) {
 
   //email header
   const email_header = `
-  <p><strong>From:</strong> ${email.recipients}</p>
-  <p><strong>To:</strong> ${email.sender}</p> 
+  <p><strong>From:</strong> ${email.sender}</p>
+  <p><strong>To:</strong> ${email.recipients}</p> 
   <p><strong>Subject:</strong> ${email.subject}</p> 
   <p><strong>Timestamp:</strong> ${email.timestamp}</p>
   `;
@@ -106,7 +120,11 @@ function load_email_page(email) {
   //reply button
   const reply_button = document.createElement('button');
   reply_button.innerHTML = 'Reply';
-  reply_button.className = 'reply_btn btn btn-sm btn-outline-primary';
+  reply_button.id = 'reply_btn'
+  reply_button.className = 'btn btn-sm btn-outline-primary';
+  reply_button.addEventListener('click', () => {
+    reply_email(email);
+  });
   document.querySelector('#emails-view').append(reply_button);
 
   //line before content
@@ -119,8 +137,6 @@ function load_email_page(email) {
   email_body.innerHTML = `${email.body}`
   document.querySelector('#emails-view').append(email_body);
 
-  //reply button redirect to compose
-  document.querySelector('.reply_btn').addEventListener('click', compose_email); //need to fill 'to' space with email who sent
 
   //show the email in the console when it is clicked
   console.log(email);

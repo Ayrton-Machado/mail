@@ -3,8 +3,13 @@ textarea {
 }
 
 .email_container {
-    padding: 7px;
-    border: solid 2px;
+    margin: 5px;
+    padding: 8px;
+    border: solid 1.5px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    flex: row;
 }
 
 .email_read {
