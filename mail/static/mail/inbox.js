@@ -82,7 +82,21 @@ function load_mailbox(mailbox) {
         .then(response => response.json())
         .then(email => {
           console.log(email)
-          //Need to finish format each_email
+          //create archive button
+          const archive_button = document.createElement('button');
+          archive_button.style.cursor = 'pointer';
+          archive_button.className = 'btn btn-sm btn-outline-primary'
+          //archive an
+          if (email.archived === true) {
+            archive_button.innerHTML = 'Unarchive'
+          }
+          else {
+            archive_button.innerHTML = 'Archive'
+          };
+          archive_button.addEventListener('click', () => {
+            archive_email(email);
+            location.reload();
+          });
           const element = document.createElement('div');
           element.style.cursor = 'pointer';
           element.innerHTML = `<span><strong>${email.sender} </strong>  ${email.subject} </span> <span style="color: grey;">${email.timestamp}</span>`;
@@ -96,7 +110,16 @@ function load_mailbox(mailbox) {
             read_email(email);
             load_email_page(email);
           });
-          document.querySelector('#emails-view').append(element);
+
+          //if user sent a email, its not possible to archive it
+          const user_email = document.getElementById('user_email').innerHTML;
+          console.log(user_email);
+          if (email.sender === user_email) {
+            document.querySelector('#emails-view').append(element);
+          }
+          else {
+            document.querySelector('#emails-view').append(element, archive_button);
+          };
         });
       }, index * 50);
     });
@@ -150,4 +173,23 @@ function read_email(email) {
       read: true
     })
   })
+}
+
+function archive_email(email) {
+  if (email.archived === true) {
+    fetch(`/emails/${email.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        archived: false
+      })
+    })
+  }
+  else {
+    fetch(`/emails/${email.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        archived: true
+      })
+    })
+  };
 }

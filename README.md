@@ -16,7 +16,7 @@ Design a front-end for an email client that makes API calls to send and receive 
 ## TODO
 - [X] Send Mail: When a user submits the email composition form, add JavaScript code to actually send the email.
     - [X] You’ll likely want to make a POST request to /emails, passing in values for recipients, subject, and body.
-    [X] Once the email has been sent, load the user’s sent mailbox.
+    - [X] Once the email has been sent, load the user’s sent mailbox.
 - [X] Mailbox: When a user visits their Inbox, Sent mailbox, or Archive, load the appropriate mailbox.
     - [X] You’ll likely want to make a GET request to /emails/<mailbox> to request the emails for a particular mailbox.
     - [X] When a mailbox is visited, the application should first query the API for the latest emails in that mailbox.
@@ -29,10 +29,10 @@ Design a front-end for an email client that makes API calls to send and receive 
     - [X] You’ll likely want to add an additional div to inbox.html (in addition to emails-view and compose-view) for displaying the email. Be sure to update your code to hide and show  the right views when navigation options are clicked.
     - [X] See the hint in the Hints section about how to add an event listener to an HTML element that you’ve added to the DOM.
     - [X] Once the email has been clicked on, you should mark the email as read. Recall that you can send a PUT request to /emails/<email_id> to update whether an email is read or not.
-- [ ] Archive and Unarchive: Allow users to archive and unarchive emails that they have received.
-    - [ ] When viewing an Inbox email, the user should be presented with a button that lets them archive the email. When viewing an Archive email, the user should be presented with a - [ ] button that lets them unarchive the email. This requirement does not apply to emails in the Sent mailbox.
-    - [ ] Recall that you can send a PUT request to /emails/<email_id> to mark an email as archived or unarchived.
-    - [ ] Once an email has been archived or unarchived, load the user’s inbox.
+- [X] Archive and Unarchive: Allow users to archive and unarchive emails that they have received.
+    - [X] When viewing an Inbox email, the user should be presented with a button that lets them archive the email. When viewing an Archive email, the user should be presented with a button that lets them unarchive the email. This requirement does not apply to emails in the Sent mailbox.
+    - [X] Recall that you can send a PUT request to /emails/<email_id> to mark an email as archived or unarchived.
+    - [X] Once an email has been archived or unarchived, load the user’s inbox.
 - [X] Reply: Allow users to reply to an email.
     - [X] When viewing an email, the user should be presented with a “Reply” button that lets them reply to the email.
     - [X] When the user clicks the “Reply” button, they should be taken to the email composition form.
