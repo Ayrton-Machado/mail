@@ -11,6 +11,9 @@ Design a front-end for an email client that makes API calls to send and receive 
 ## How to run
 [Python3](https://www.python.org/) is a requirement.  
 - Install django with `pip install django`
+- In your terminal, cd into the commerce directory.
+- Run python manage.py makemigrations auctions to make migrations for the auctions app.
+- Run python manage.py migrate to apply migrations to your database.
 - Run with `python manage.py runserver` or `python3 manage.py runserver`
 
 ## TODO
